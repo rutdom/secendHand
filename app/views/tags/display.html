@@ -1,0 +1,42 @@
+*{ Display a post in one of these modes: 'full', 'home' or 'teaser' }*
+
+<div class="notice ${_as == 'teaser' ? 'teaser' : ''}">
+	<h2 class="notice-title">
+		<a href="#">${_notice.title}</a>
+	</h2>
+	<div class="notice-metadata">
+		<span class="notice-author">by ${_notice.author.fullname}</span>, <span
+			class="notice-date">${_notice.postedAt.format('dd MMM yy')}</span> #{if
+		_as != 'full'} <span class="notice-comments"> &nbsp;|&nbsp;
+			${_notice.offers.size() ?: 'no'}
+			comment${_notice.offers.size().pluralize()} #{if _notice.offers} ,
+			latest for ${_notice.offers[-1].price} #{/if} </span> #{/if}
+	</div>
+	#{if _as != 'teaser'}
+	<div class="notice-content">
+		<div class="about">Detail:</div>
+		${_notice.offers.nl2br()}
+	</div>
+	#{/if}
+</div>
+
+#{if _as == 'full'}
+<div class="comments">
+	<h3>${_notice.offers.size() ?: 'no'}
+		offer${_notice.offers.size().pluralize()}</h3>
+
+	#{list items:_notice.offers, as:'offer'}
+	<div class="offer">
+		<div class="offer-metadata">
+			<span class="offer-author">by ${offer.author},</span> <span
+				class="offer-date"> ${offer.postedAt.format('dd MMM yy')} </span>
+		</div>
+		<div class="offer-content">
+			<div class="about">Detail:</div>
+			${offer.amount} for ${offer.price} per each
+		</div>
+	</div>
+	#{/list}
+
+</div>
+#{/if}
