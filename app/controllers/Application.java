@@ -24,4 +24,14 @@ public class Application extends Controller {
         renderArgs.put("blogBaseline", Play.configuration.getProperty("blog.baseline"));
     }
     
+    public static void show(Long id) {
+        Notice notice = Notice.findById(id);
+        render(notice);
+    }
+    
+    public static void noticeOffer(Long postId, String author, int amount, float price) {
+        Notice notice = Notice.findById(postId);
+        notice.addOffer(author, amount, price);
+        show(postId);
+    }
 }

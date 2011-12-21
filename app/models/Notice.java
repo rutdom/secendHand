@@ -37,6 +37,16 @@ public class Notice extends Model {
 		this.offers.clear();
 	}
 
+	public Notice previous() {
+		Notice result=Notice.find("postedAt < ? order by postedAt desc", postedAt).first();
+		return result;
+	}
+	 
+	public Notice next() {
+		Notice result=Notice.find("postedAt > ? order by postedAt asc", postedAt).first();
+		return result;
+	}
+	
 	public Notice addOffer(String author, int amount, float price) {
 
 		Offer newOffer = new Offer(this, author, amount, price).save();

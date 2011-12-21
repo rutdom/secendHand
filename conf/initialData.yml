@@ -27,6 +27,20 @@ Notice(bobNotice):
   author: Bob
   offers: [joes,toms]
 
+Notice(bobNotice2):
+  title: "My 2 post"
+  postedAt: 2011-12-14
+  content: "Hello word2"
+  author: Bob
+
+
+Notice(bobNotice3):
+  title: "My 3 post"
+  postedAt: 2011-12-16
+  content: "Hello word3"
+  author: Bob
+
+
 ################################
 ############## Offers
 

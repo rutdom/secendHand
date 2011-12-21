@@ -2,7 +2,7 @@
 
 <div class="notice ${_as == 'teaser' ? 'teaser' : ''}">
 	<h2 class="notice-title">
-		<a href="#">${_notice.title}</a>
+		<a href="@{Application.show(_notice.id)}">${_notice.title}</a>
 	</h2>
 	<div class="notice-metadata">
 		<span class="notice-author">by ${_notice.author.fullname}</span>, <span
@@ -21,7 +21,7 @@
 </div>
 
 #{if _as == 'full'}
-<div class="comments">
+<div class="offer">
 	<h3>${_notice.offers.size() ?: 'no'}
 		offer${_notice.offers.size().pluralize()}</h3>
 
@@ -29,7 +29,7 @@
 	<div class="offer">
 		<div class="offer-metadata">
 			<span class="offer-author">by ${offer.author},</span> <span
-				class="offer-date"> ${offer.postedAt.format('dd MMM yy')} </span>
+				class="offer-date"> ${offer.offerAt.format('dd MMM yy')} </span>
 		</div>
 		<div class="offer-content">
 			<div class="about">Detail:</div>
