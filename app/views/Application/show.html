@@ -13,7 +13,7 @@
 
 #{display notice:notice, as:'full' /}
 
-<h3>Post a comment</h3>
+<h3>Make a offer</h3>
 
 #{form @Application.noticeoffer(notice.id)}
 <p>
@@ -21,12 +21,14 @@
 		name="author" id="author" />
 </p>
 <p>
-	<label for="amount">How many: </label> <select> 
-	#{list items:0..10, as:'i'} ${i} #{/list}
+	<label for="amount">How many: </label> <select name=amount> 
+		#{list items: 1..10 , as:'i'} 
+			<option>${i}</option> 
+		#{/list}
 	</select> <label for="price">For how much: </label> <input type="number"
 		name="price" />
 </p>
 <p>
-	<input type="submit" value="Submit your comment" />
+	<input type="submit" value="Send" />
 </p>
 #{/form}
