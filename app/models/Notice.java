@@ -8,6 +8,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 @Entity
@@ -47,7 +48,7 @@ public class Notice extends Model {
 		return result;
 	}
 	
-	public Notice addOffer(String author, int amount, float price) {
+	public Notice addOffer( String author, int amount, float price) {
 
 		Offer newOffer = new Offer(this, author, amount, price).save();
 		this.offers.add(newOffer);

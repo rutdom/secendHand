@@ -1,6 +1,7 @@
 package controllers;
 
 import play.*;
+import play.data.validation.Required;
 import play.mvc.*;
 
 import java.util.*;
@@ -26,12 +27,17 @@ public class Application extends Controller {
     
     public static void show(Long id) {
         Notice notice = Notice.findById(id);
+        
         render(notice);
     }
     
-    public static void noticeOffer(Long postId, String author, int amount, float price) {
+    public static void noticeOffer(Long postId,@Required String author,@Required int amount,@Required float price) {
         Notice notice = Notice.findById(postId);
+        if (validation.hasErrors()) {
+            render("Application/show.html", notice);
+        }
         notice.addOffer(author, amount, price);
+        flash.success("Thanks for offering %s", author);
         show(postId);
     }
 }
