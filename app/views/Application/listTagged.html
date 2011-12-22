@@ -1,0 +1,22 @@
+#{extends 'main.html' /}
+#{set title:'Notices tagged with ' + tag /}
+ 
+*{********* Title ********* }*
+ 
+#{if notices.size() > 1}
+   <h3>There are ${notices.size()} notices tagged '${tag}'</h3>
+#{/if}
+#{elseif notices}
+    <h3>There is 1 notice tagged '${tag}'</h3>
+#{/elseif}
+#{else}
+    <h3>No notice tagged '${tag}'</h3>
+#{/else}
+ 
+*{********* Notice list *********}*
+ 
+<div class="older-posts">
+    #{list items:notices, as:'notice'}
+        #{display notice:notice, as:'teaser' /}
+    #{/list}
+</div>

@@ -40,3 +40,11 @@
 
 </div>
 #{/if}
+#{elseif _notice.tags}
+    <span class="post-tags">
+        - Tagged
+        #{list items:_notice.tags, as:'tag'}
+            <a href="@{Application.listTagged(tag.name)}">${tag}</a>${tag_isLast ? '' : ', '}
+        #{/list}
+    </span>
+#{/elseif}

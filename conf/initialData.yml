@@ -1,6 +1,20 @@
 # you describe your data using the YAML notation here
 # and then load them using Fixtures.load("data.yml")
 
+
+
+Tag(play):
+    name:           Play
+ 
+Tag(architecture):
+    name:           Architecture
+ 
+Tag(test):
+    name:           Test
+ 
+Tag(mvc):
+    name:           MVC
+
 # User(bob):
 #   email: bob@gmail.com
 #   password: secret
@@ -26,6 +40,10 @@ Notice(bobNotice):
   content: "Hello word"
   author: Bob
   offers: [joes,toms]
+  tags:
+                    - play
+                    - architecture
+                    - mvc
 
 Notice(bobNotice2):
   title: "My 2 post"
@@ -57,3 +75,5 @@ Offer(toms):
   amount: 2
   price: 1.4
   notice: bobNotice
+
+

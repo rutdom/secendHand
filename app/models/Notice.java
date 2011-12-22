@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -36,6 +37,8 @@ public class Notice extends Model {
 		this.content = content;
 		this.offers = Offer.findAll();
 		this.offers.clear();
+		this.tags =     new HashSet(Arrays.asList(new String[] { "1", "2", "5" }))  ;
+		this.tags.clear();
 	}
 
 	public Notice previous() {
@@ -43,6 +46,20 @@ public class Notice extends Model {
 		return result;
 	}
 	 
+	@ManyToMany(cascade=CascadeType.PERSIST)
+	public Set<Tag> tags;
+	
+	public Notice tagItWith(String name) {
+	    tags.add(Tag.findOrCreateByName(name));
+	    return this;
+	}
+	
+	public static List<Notice> findTaggedWith(String... tags) {
+	    return Notice.find(
+	            "select distinct p from Notice p join p.tags as t where t.name in (:tags) group by p.id, p.author, p.title, p.content,p.postedAt having count(t.id) = :size"
+	    ).bind("tags", tags).bind("size", tags.length).fetch();
+	}
+	
 	public Notice next() {
 		Notice result=Notice.find("postedAt > ? order by postedAt asc", postedAt).first();
 		return result;

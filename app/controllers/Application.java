@@ -2,6 +2,7 @@ package controllers;
 
 import play.*;
 import play.data.validation.Required;
+import play.libs.Images;
 import play.mvc.*;
 
 import java.util.*;
@@ -25,10 +26,20 @@ public class Application extends Controller {
         renderArgs.put("blogBaseline", Play.configuration.getProperty("blog.baseline"));
     }
     
+    public static void listTagged(String tag) {
+        List<Notice> notices = Notice.findTaggedWith(tag);
+        render(tag, notices);
+    }
+    
     public static void show(Long id) {
         Notice notice = Notice.findById(id);
         
         render(notice);
+    }
+    
+    public static void captcha() {
+        Images.Captcha captcha = Images.captcha();
+        renderBinary(captcha);
     }
     
     public static void noticeOffer(Long postId,@Required String author,@Required int amount,@Required float price) {

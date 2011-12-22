@@ -11,6 +11,41 @@ public class BasicTest extends UnitTest {
 	}
 
 	@Test
+	public void testTags() {
+	    // Create a new user and save it
+		User bob = new User("bob@gmail.com", "secret", "Bob", "Bob", "Smith")
+		.save();
+	 
+	    // Create a new post
+		Notice bobNotice = new Notice(bob, "My first post", "Hello world")
+		.save();
+		Notice bobNotice2 = new Notice(bob, "My 2t post", "Hello world")
+		.save();
+	 
+	    // Well
+	    assertEquals(0, Notice.findTaggedWith("Red").size());
+	 
+	    // Tag it now
+	    bobNotice.tagItWith("Red").tagItWith("Blue").save();
+	    bobNotice2.tagItWith("Red").tagItWith("Green").save();
+	 
+	    // Check
+	    assertEquals(2, Notice.findTaggedWith("Red").size());
+	    assertEquals(1, Notice.findTaggedWith("Blue").size());
+	    assertEquals(1, Notice.findTaggedWith("Green").size());
+	    assertEquals(1, Notice.findTaggedWith("Red", "Blue").size());
+	    assertEquals(1, Notice.findTaggedWith("Red", "Green").size());
+	    assertEquals(0, Notice.findTaggedWith("Red", "Green", "Blue").size());
+	    assertEquals(0, Notice.findTaggedWith("Green", "Blue").size());
+	    List<Map> cloud = Tag.getCloud();
+		assertEquals(
+		    "[{tag=Blue, pound=1}, {tag=Green, pound=1}, {tag=Red, pound=2}]",
+		    cloud.toString()
+		);
+	}
+	
+	
+	@Test
 	public void useTheCommentsRelation() {
 		// Create a new user and save it
 		User bob = new User("bob@gmail.com", "secret", "Bob", "Bob", "Smith")
@@ -101,6 +136,9 @@ public class BasicTest extends UnitTest {
 		assertEquals("Tom", secondComment.author);
 		assertEquals(1, secondComment.amount);
 		assertNotNull(secondComment.offerAt);
+		
+		
+		
 	}
 
 	@Test
@@ -136,7 +174,7 @@ public class BasicTest extends UnitTest {
 	    Fixtures.loadModels("TestData.yml");
 	 
 	    // Count things
-	    System.out.println(User.findAll());
+	//    System.out.println(User.findAll());
 	    assertEquals(1, User.count());
 	    assertEquals(1, Notice.count());
 	    assertEquals(2, Offer.count());
