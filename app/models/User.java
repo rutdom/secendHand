@@ -3,12 +3,18 @@ package models;
 import java.util.*;
 import javax.persistence.*;
 
+import play.data.validation.Email;
+import play.data.validation.Required;
 import play.db.jpa.*;
 
 @Entity
 public class User extends Model {
 
+	@Email
+    @Required
 	public String email;
+	
+	  @Required
 	public String password;
 	public String fullname;
 	public boolean isAdmin;

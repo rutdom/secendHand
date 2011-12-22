@@ -27,7 +27,7 @@ public class Application extends Controller {
     }
     
     public static void listTagged(String tag) {
-        List<Notice> notices = Notice.findTaggedWith(tag);
+        List<Notice> notices = models.Notice.findTaggedWith(tag);
         render(tag, notices);
     }
     

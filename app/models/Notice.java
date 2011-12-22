@@ -9,6 +9,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 
@@ -16,14 +17,19 @@ import play.db.jpa.Model;
 // ze rekord
 public class Notice extends Model {
 
+    @Required
 	public String title;
-	public Date postedAt;
+    @Required
+    public Date postedAt;
 
 	@Lob
+	@Required
+    @MaxSize(10000)
 	// duuuuzy tekst bedzie
 	public String content;
 
 	@ManyToOne
+	@Required
 	// duzo ogloszen, jeden autor
 	public User author;
 
@@ -32,6 +38,7 @@ public class Notice extends Model {
 
 	public Notice(User author, String title, String content) {
 		this.author = author;
+		
 		this.title = title;
 		this.postedAt = new Date();
 		this.content = content;
@@ -77,4 +84,10 @@ public class Notice extends Model {
 		return new String(title + " " + content + "\nby " + author
 				+ "\nposted at: " + postedAt);
 	}
-}
+	public static List<Notice> findTaggedWith(String tag) {
+	    return Notice.find(
+	        "select distinct p from Post p join p.tags as t where t.name = ?", tag
+	    ).fetch();
+	}
+	}
+
